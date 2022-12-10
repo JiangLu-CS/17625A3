@@ -1,0 +1,30 @@
+syntax = "proto3";
+import "book.proto";
+
+// inventory CRUD service
+service InventoryService {
+    // Create a book
+    rpc CreateBook(CreateRequest) returns (CreateReply) {};
+    // Get a book
+    rpc GetBook(GetRequest) returns (GetReply) {};
+}
+
+message CreateRequest {
+  string title = 1;
+  string author = 2;
+  int32 publishing_year = 3;
+  Genre genre = 4;
+}
+
+message CreateReply {
+    // if create success, will return the isbn, else return -1 stands for create failed
+    string isbn = 1;
+}
+
+message GetRequest {
+  string isbn = 1;
+}
+
+message GetReply {
+  Book book = 1;
+}

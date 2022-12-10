@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message Book {
+  string isbn = 1;
+  string title = 2;
+  string author = 3;
+  int32 publishing_year = 4;
+  Genre genre = 5;
+}
+
+enum Genre{
+    GENRE_MYSTERY = 0;
+    GENRE_HISTORICAL = 1;
+    GENRE_ROMANCE = 2;
+}

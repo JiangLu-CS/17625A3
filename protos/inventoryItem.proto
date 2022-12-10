@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+message InventoryItem {
+  string inventory_number = 1;
+  oneof item_type{
+    Book book = 0;
+  }
+}
+
+enum Status{
+    STATUS_AVAILABLE = 0;
+    STATUS_TAKEN = 1;
+}
