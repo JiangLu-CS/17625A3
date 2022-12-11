@@ -4,9 +4,18 @@ from get_book_titles import get_titles
 import get_book_titles
 from inventory_client import Client
 
+class Reply:
+    def __init__(self,book):
+        self.book = book
 
-book1 = dict(isbn = "1", title = "book1", author = "Jane", publishing_year = 1980)
-notExistRes = dict(isbn = "-1")
+class Book:
+    def __init__(self, isbn, title):
+        self.isbn = isbn
+        self.title = title
+
+# mocked return result
+mockReplyBook1 = Reply(Book("1", "book1"))
+mockReplyNotExistRes = Reply(Book("-1", ""))
 
 class Test_get_book_titles(unittest.TestCase):
     def test_01(self):
@@ -14,7 +23,7 @@ class Test_get_book_titles(unittest.TestCase):
         print("get book title success mock test")
         # mock client api, each time return book1 as result
         client = Client()
-        client.get_book = mock.Mock(return_value = book1)
+        client.get_book = mock.Mock(return_value = mockReplyBook1)
         # get book titles based on mock result
         book_title_list = get_titles(client, ["1", "2", "3"])
         print(book_title_list)
@@ -30,12 +39,15 @@ class Test_get_book_titles(unittest.TestCase):
         # mock client api, each time return book1 as result
         # get book titles based on mock result
         client = Client()
-        client.get_book = mock.Mock(return_value = notExistRes)
+        client.get_book = mock.Mock(return_value = mockReplyNotExistRes)
         # if the book does not exist, should not include its title
         book_title_list = get_titles(client, ["not exist1", "not exist2"])
         print(book_title_list)
         self.assertEqual(len(book_title_list), 0)
 
 
+
+
 if __name__ == "__main__":
     unittest.main()
+
